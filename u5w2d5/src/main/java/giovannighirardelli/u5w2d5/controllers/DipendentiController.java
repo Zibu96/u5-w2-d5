@@ -56,7 +56,7 @@ public class DipendentiController {
         this.dipendentiService.findByIdAndDelete(dipendentiId);
     }
 
-    @PostMapping("/{dipendentiId}/profilePic")
+    @PatchMapping("/{dipendentiId}/profilePic")
     public Dipendenti uploadProfilePic (@RequestParam("profilePic") MultipartFile image, @PathVariable UUID dipendentiId) throws IOException {
         return this.dipendentiService.uploadImage(dipendentiId, image);
     }
