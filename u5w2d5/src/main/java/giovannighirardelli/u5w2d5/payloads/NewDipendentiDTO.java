@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 public record NewDipendentiDTO(
         @NotEmpty(message = "Lo username è obbligatorio per la creazione di un dipendente")
         @Size(min = 4, max = 20, message = "Lo username del dipendente non può essere minore di 4 caratteri o maggiore di 20")
+        String username,
     @NotEmpty(message = "Il nome è obbligatorio per la creazione di un dipendente")
     @Size(min = 3, max = 16, message = "Il nome non può essere minore di 3 caratteri o maggiore di 16")
     String name,

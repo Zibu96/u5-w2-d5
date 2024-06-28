@@ -28,9 +28,9 @@ public class Dispositivi {
     @JoinColumn(name = "dipendenti_id")
     private Dipendenti dipendenti;
 
-    public Dispositivi(Tipologia tipologia, Stato stato, Dipendenti dipendenti) {
+    public Dispositivi(Tipologia tipologia, Stato stato) {
         this.tipologia = tipologia;
         this.stato = stato;
-        this.dipendenti = dipendenti;
+
     }
 }
