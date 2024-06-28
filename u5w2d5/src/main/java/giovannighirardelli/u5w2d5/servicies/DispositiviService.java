@@ -1,7 +1,9 @@
 package giovannighirardelli.u5w2d5.servicies;
 
 import com.cloudinary.Cloudinary;
+import giovannighirardelli.u5w2d5.entities.Dipendenti;
 import giovannighirardelli.u5w2d5.entities.Dispositivi;
+import giovannighirardelli.u5w2d5.enums.Stato;
 import giovannighirardelli.u5w2d5.exceptions.BadRequestException;
 import giovannighirardelli.u5w2d5.exceptions.NotFoundException;
 import giovannighirardelli.u5w2d5.payloads.NewDispositiviDTO;
@@ -21,6 +23,8 @@ public class DispositiviService {
 
     @Autowired
     private DispositiviRepository dispositiviRepository;
+    @Autowired
+    private DipendentiService dipendentiService;
 
 
     public Page<Dispositivi> getDispositivi(int pageNumber, int pageSize, String sortBy){
@@ -32,7 +36,7 @@ public class DispositiviService {
     public Dispositivi saveDispositivi(NewDispositiviDTO body) {
 
 
-        Dispositivi dispositivi = new Dispositivi(body.tipologia(), body.stato());
+        Dispositivi dispositivi = new Dispositivi(body.tipologia(), body.stato(), null);
 
 
         return this.dispositiviRepository.save(dispositivi);
@@ -58,5 +62,15 @@ public class DispositiviService {
         Dispositivi found = this.findById(id);
         this.dispositiviRepository.delete(found);
 
+    }
+
+    public Dispositivi uploadDipendenti(UUID dispositivoId, UUID dipendentiId){
+        Dispositivi found = this.dispositiviRepository.findById(dispositivoId).orElseThrow(() -> new NotFoundException(dispositivoId));
+        Dipendenti dipendenti = this.dipendentiService.findById(dipendentiId);
+       found.setDipendenti(dipendenti);
+       found.setStato(Stato.ASSEGNATO);
+
+
+        return this.dispositiviRepository.save(found);
     }
 }

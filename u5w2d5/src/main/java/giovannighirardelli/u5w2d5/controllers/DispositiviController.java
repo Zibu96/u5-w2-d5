@@ -53,5 +53,10 @@ public class DispositiviController {
     public void findByIdAndDelete(@PathVariable UUID dispositiviId){
         this.dispositiviService.findByIdAndDelete(dispositiviId);
     }
+
+    @PatchMapping("/{dispositiviId}/{dipendentiId}")
+    public Dispositivi assignDispositivi(@PathVariable UUID dispositiviId, @PathVariable UUID dipendentiId){
+        return this.dispositiviService.uploadDipendenti(dispositiviId, dipendentiId);
+    }
 }
 
