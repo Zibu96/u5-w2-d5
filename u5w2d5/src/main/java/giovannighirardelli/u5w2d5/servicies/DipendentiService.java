@@ -1,6 +1,7 @@
 package giovannighirardelli.u5w2d5.servicies;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import giovannighirardelli.u5w2d5.entities.Dipendenti;
 import giovannighirardelli.u5w2d5.exceptions.BadRequestException;
 import giovannighirardelli.u5w2d5.exceptions.NotFoundException;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
@@ -61,6 +64,15 @@ public class DipendentiService {
     public void findByIdAndDelete(UUID id) {
         Dipendenti found = this.findById(id);
         this.dipendentiRepository.delete(found);
+
+    }
+
+    public Dipendenti uploadImage(UUID id, MultipartFile file) throws IOException {
+        Dipendenti found = this.dipendentiRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        String profilePic = (String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setProfilePic(profilePic);
+
+        return this.dipendentiRepository.save(found);
 
     }
 }
