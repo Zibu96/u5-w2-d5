@@ -21,8 +21,6 @@ public class DispositiviService {
 
     @Autowired
     private DispositiviRepository dispositiviRepository;
-    @Autowired
-    private Cloudinary cloudinary;
 
 
     public Page<Dispositivi> getDispositivi(int pageNumber, int pageSize, String sortBy){
@@ -52,7 +50,7 @@ public class DispositiviService {
         found.setStato(updatedDispositivi.getStato());
         found.setDipendenti(updatedDispositivi.getDipendenti());
 
-        return this.dispositiviRepository.save(updatedDispositivi);
+        return this.dispositiviRepository.save(found);
 
     }
 
