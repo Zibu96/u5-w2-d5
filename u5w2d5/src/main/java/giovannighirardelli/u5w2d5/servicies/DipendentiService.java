@@ -54,7 +54,7 @@ public class DipendentiService {
         found.setEmail(updatedDipendenti.getEmail());
         found.setProfilePic("https://ui-avatars.com/api/?name=" + updatedDipendenti.getName() + "+" + updatedDipendenti.getLastName());
 
-        return this.dipendentiRepository.save(updatedDipendenti);
+        return this.dipendentiRepository.save(found);
 
     }
 
